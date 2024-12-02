@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:2701/scatch');
 
 const userSchema = mongoose.Schema({
     fullname: { type: String },
@@ -13,4 +12,4 @@ const userSchema = mongoose.Schema({
     picture: { type: String, default: '' }
 })
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('user', userSchema);
