@@ -37,7 +37,7 @@ const loginuser = async (req, res) => {
             if(result){
                 const token = generatetoken(user);
                 res.cookie("token",token);
-                res.send('you can login');
+                res.redirect('/shop');
             }
             else{
                 res.status(401).send('email or password is incorrect');
@@ -48,5 +48,12 @@ const loginuser = async (req, res) => {
         res.send(error.message);
     }
 }
+
+const logout = (req, res) => {
+    res.cookie("token",'');
+    res.redirect('/');
+}
+
 module.exports.registeruser = registeruser;
 module.exports.loginuser = loginuser;
+module.exports.logout = logout;
