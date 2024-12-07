@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const upload = require('../config/multer-config');
 
 const ownerModel = require('../models/ownerModel');
-
+const productModel = require('../models/productmodel');
 if( process.env.NODE_ENV === 'development'){
     router.post('/create', async (req, res) => {
         try {
@@ -31,8 +32,36 @@ if( process.env.NODE_ENV === 'development'){
         }
     })
 }
-router.get('/', function (req, res) {
-    res.send('owner routes found');
+router.get('/admin', function (req, res) {
+    const success = req.flash('success');
+    res.render('createproducts', {success: success});
+})
+
+router.post('/product/create',upload.single('image'), async function (req, res) {
+try {
+    const { name    , 
+     price    ,
+     discount ,
+     panelcolor,
+     bgcolor  , 
+     textcolor
+    }  = req.body;
+     const img = req.file.buffer
+     const product = await productModel.create({
+         image: img,
+         name,
+         price,
+         discount,
+         panelcolor,
+         bgcolor,
+         textcolor
+     })
+     req.flash('success','Successfully created product.')
+     res.redirect('/owners/admin');
+    
+} catch (error) {
+    res.send(error.message);
+}
 })
 
 

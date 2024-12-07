@@ -9,13 +9,11 @@ const flash = require('connect-flash');
 
 const db = require('./config/mongooseConnection');
 
-const index = require('./routes/index');
+const indexRouter = require('./routes/index');
 const ownersRouter = require('./routes/ownersRouter');
 const productsRouter = require('./routes/productsRouter');
 const usersRouter = require('./routes/usersRouter');
 
-const usermodel = require('./models/usermodel');
-const productmodel = require('./models/productmodel');
 
 
 app.use(
@@ -37,7 +35,7 @@ app.use(cookieParser());
 //ejs loader
 app.set('view engine', "ejs");
 
-app.use('/', index);
+app.use('/', indexRouter);
 app.use('/owners', ownersRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
